@@ -6,7 +6,6 @@ class CreateStocks < ActiveRecord::Migration[6.0]
       t.string :stock_code
       t.string :stock_name
       t.string :transaction_type
-      t.string :buy_sell
       t.integer :owned_quantity
       t.date :start_date
       t.float :start_price
@@ -16,6 +15,8 @@ class CreateStocks < ActiveRecord::Migration[6.0]
       t.float :pl_ratio
       t.integer :pl_amount
       t.text :memo
+      t.string :market_category
+      t.string :price_type
 
       t.timestamps
     end

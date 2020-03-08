@@ -12,7 +12,7 @@ class CreateStockmasters < ActiveRecord::Migration[6.0]
       t.string :scale_code
       t.string :scale_category
 
-      t.timestamps
+      t.timestamps   
     end
   end
 end

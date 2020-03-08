@@ -6,11 +6,9 @@ class CreatePerformances < ActiveRecord::Migration[6.0]
       t.string :stock_code
       t.string :stock_name
       t.string :transaction_type
-      t.string :buy_sell
       t.integer :owned_quantity
       t.date :start_date
       t.float :start_price
-      t.integer :start_fee
       t.integer :start_amount
       t.date :end_date
       t.float :end_price
@@ -19,6 +17,7 @@ class CreatePerformances < ActiveRecord::Migration[6.0]
       t.float :pl_ratio
       t.integer :pl_amount
       t.text :memo
+      t.string :market_category
 
       t.timestamps
     end

@@ -10,6 +10,8 @@ class CreateDividends2 < ActiveRecord::Migration[6.0]
       t.date :dividend_date
       t.float :dividend_price
       t.integer :dividend_amount
+      t.string :season
+      t.text :memo
 
       t.timestamps
     end
