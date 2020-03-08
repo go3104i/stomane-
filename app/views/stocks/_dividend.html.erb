@@ -1,0 +1,82 @@
+<div class = "panel-container">
+  <div id = "dividend-title" class = "panel-title">
+    <img src = "/assets/haito.png" alt ="" width = "130" height = "45">
+  </div>
+  <!-- 入力フォーム -->
+  <%= form_tag("/stocks/#{@stock.id}/operation/dividend_create") do %>
+    <div class="dividend-form-body">
+      <div class = "dividend-message">
+        <a class = "m1">配当情報を入力してください</a><br>
+        <a class = "m2">＊は入力必須　★は１項目以上の入力が必須</a>
+      </div>
+      <!-- エラーメッセージ出力-->
+      <% if @tab_select == "04" %>
+        <div class = "form-error-wrapper">
+          <% @dividend.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @errors_message.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <label>＊[配当種別]</label>
+      <div class='form-group'>
+        <div class='form-season'>
+          <% if @dividend.season == "01" || @dividend.season.blank? %>
+            <a><input type="radio" name="season" value="01" checked>期末配当</a>
+            <a><input type="radio" name="season" value="02">中間配当</a>
+            <a><input type="radio" name="season" value="03">四半期配当</a>
+          <% elsif @dividend.season == "02"%>
+            <a><input type="radio" name="season" value="01">期末配当</a>
+            <a><input type="radio" name="season" value="02" checked>中間配当</a>
+            <a><input type="radio" name="season" value="03">四半期配当</a>
+          <% elsif @dividend.season == "03"%>
+            <a><input type="radio" name="season" value="01">期末配当</a>
+            <a><input type="radio" name="season" value="02">中間配当</a>
+            <a><input type="radio" name="season" value="03" checked>四半期配当</a>
+          <% end %>
+        </div>
+      </div>
+
+      <label>＊[配当日]</label><br>
+      <input type = "text" id = "dividend-input-date" name="dividend_date" class = "input-form input-date dividend-input-form" readonly autocomplete="off" value=<%= @dividend.dividend_date %>><br>
+
+      <label>★[配当対象株数(Ａ)]</label><br>
+      <div class = "quantity-form">
+        <% if @dividend_target == "01" %>
+          <a><input type="radio" name="dividend_target" class="dividend_target quantity-radio" id="dividend_target1" value="01" checked>全保有株</a>
+          <a><input type="radio" name="dividend_target" class="dividend_target quantity-radio" id="dividend_target2" value="02">株数指定</a><br>
+          <input id = "dividend_quantity" name="dividend_quantity" class = "dividend-input-form2 grey-color" autocomplete="off" value=<%= @stock.owned_quantity %> disabled>株<br>
+          <!-- #dividend_quantityへ「全保有数量」の値渡し用　非表示 -->
+          <input id="dividend_target" value=<%= @stock.owned_quantity %>>
+        <% elsif @dividend_target == "02" %>
+          <a><input type="radio" name="dividend_target" class="dividend_target quantity-radio" id="dividend_target1" value="01">全保有株</a>
+          <a><input type="radio" name="dividend_target" class="dividend_target quantity-radio" id="dividend_target2" value="02" checked>株数指定</a><br>
+          <input id = "dividend_quantity" name="dividend_quantity" class = "dividend-input-form2" autocomplete="off" value=<%= @dividend_q %>>株<br>
+        <% end %>
+      </div>
+
+      <label>★[１株当たりの配当金額(Ｂ)]</label>
+      <div class="form-price">
+          <input id = "dividend_price" name="dividend_price" class = "input-form dividend-input-form" autocomplete="off" value = <%= seisho_helper(@dividend_p) %>>円
+      </div>
+
+      <!-- 配当金総額計算ボタン -->
+      <div class = "calculation-button-box">
+        <input id = "calculation-button" type="button" value="配当金総額を計算">
+      </div>
+
+      <label>＊[税引前配当金総額(Ａ×Ｂ)]　</label><a class = "m3">※小数点以下四捨五入</a>
+      <div class="form-price">
+          <input id = "dividend_amount" name="dividend_amount" class = "input-form input-dividend dividend-input-form" autocomplete="off" value = <%= seisho_helper(@dividend.dividend_amount) %>>円
+      </div>
+    </div>
+
+    <!-- 登録ボタン -->
+    <div class = "entry-button-box">
+      <input class = "entry-button dividend-button" type="submit" value="登 録">
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,103 @@
+<div id ="possession-info-box">
+  <div id = "possession-info-view">
+    <!-- 銘柄コード 銘柄名-->
+    <div id = "pi-top-box">
+      <label id = "pi-stock_code"><%= "[" + @stock_code + "]" + "　"%></label>
+      <label id = "pi-market_category"><%= @market_category %></label><br>
+      <label id = "pi-stock_name"><%= @stock_name %></label>
+    </div>
+
+    <table id = "possession-info-table">
+      <tr>
+        <td class = "column-top"></td>
+        <td class = "record-top"></td>
+      </tr>
+      <tr>
+        <td class = "column">取引種別</td>
+        <td class = "record"><%= transaction_type_helper(@transaction_type) %></td>
+      </tr>
+      <tr>
+        <td class = "column">決済株数</td>
+        <td class = "record"><%= @owned_quantity.to_s(:delimited) %>株</td>
+      </tr>
+      <tr>
+        <td class = "column">取得日</td>
+        <td id = "start_date_info" class = "record"><%= @start_date.strftime("%Y/%m/%d") %></td>
+      </tr>
+      <tr>
+        <td class = "column">平均取得単価</td>
+        <% s_price = seisho_helper(@start_price.round(2)) %>
+        <td class = "record"><%= s_price.to_s(:delimited) %>円</td>
+      </tr>
+      <tr>
+        <td class = "column">取得総価額</td>
+        <td class = "record"><%= yen_helper @start_amount.to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <td class = "column">決済日</td>
+        <td id = "start_date_info" class = "record"><%= @end_date.strftime("%Y/%m/%d") %></td>
+      </tr>
+      <tr>
+        <td class = "column">平均決済単価</td>
+        <% e_price = seisho_helper(@end_price.round(2)) %>
+        <td class = "record"><%= yen_helper e_price.to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <td class = "column">決済総価額</td>
+        <% e_amount = @owned_quantity * @end_price %>
+        <% e_amount = seisho_helper(e_amount) %>
+        <td class = "record"><%= yen_helper e_amount.to_s(:delimited) %></td>
+      </tr>
+
+      <!-- 買い売り判定　損益率＆損益額計算 -->
+      <!-- 買いの場合 -->
+      <% if @transaction_type != "03"%>
+        <% pl_ratio = (@end_price / @start_price - 1) * 100 %>
+        <% pl_amount = ((@end_price - @start_price) * @owned_quantity).to_i %>
+      <!-- 売りの場合 -->  
+      <% elsif @transaction_type == "03"%>
+        <% pl_ratio = (@start_price / @end_price - 1) * 100 %>
+        <% pl_amount = ((@start_price - @end_price) * @owned_quantity).to_i %>
+      <% end %>
+
+      <!-- 評価損益率・評価損益額 色づけ判定有り-->
+      <% pl_ratio = pl_ratio.round(2) %>
+      <% if pl_ratio > 0 %>
+        <tr>
+          <td class = "column">実現損益率</td>
+          <td class = "td_possession pl-ratio color-purple record"><%= seisho_helper(pl_ratio) %>％</td>
+        </tr>
+        <tr>
+          <td class = "column">実現損益額</td>
+          <td class = "td_possession pl-amount color-purple record"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+        </tr>
+      <% elsif pl_ratio < 0 %>
+        <tr>
+          <td class = "column">実現損益率</td>
+          <td class = "td_possession pl-ratio color-green record"><%= seisho_helper(pl_ratio) %>%</td>
+        </tr>
+        <tr>
+          <td class = "column">実現損益額</td>
+          <td class = "td_possession pl-amount color-green record"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <td class = "column">実現損益率</td>
+          <td class = "td_possession pl-ratio record"><%= seisho_helper(pl_ratio) %>%</td>
+        </tr>
+        <tr>
+          <td class = "column">実現損益額</td>
+          <td class = "td_possession pl-amount record"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class = "column-bottom"></td>
+          <td class = "record-bottom"></td>
+      </tr>
+    </table><br>
+    <div id = "memo-box">
+      <div id = "memo-title">ＭＥＭＯ</div>
+      <div id = "memo"><%= simple_format(@memo) %></div>
+    </div>
+  </div>
+</div>

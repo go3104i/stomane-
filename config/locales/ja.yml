@@ -1,0 +1,24 @@
+ja:
+  activerecord:
+    models:
+      stock:
+    attributes:
+      stock:
+        stock_code: 銘柄コード
+        stock_name: 銘柄名
+        owned_quantity: 取得株数
+        start_date: 取得日
+        start_price: 取得単価・約定単価
+        start_fee: 手数料・諸費用
+      performance:
+        stock_code: 銘柄コード
+        stock_name: 銘柄名
+        owned_quantity: 決済株数
+        end_date: 決済日
+        end_price: 決済単価・約定単価
+        end_fee: 手数料・諸費用
+      dividend:
+        dividend_date: 配当日
+        dividend_quantity: 配当対象株数
+        dividend_price: １株当たりの配当金額
+        dividend_amount: 税引前配当金総額

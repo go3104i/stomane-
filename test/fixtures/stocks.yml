@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  member_id: MyString
+  stock_code: MyString
+  stock_name: MyString
+  transaction_type: MyString
+  buy_sell: MyString
+  owned_quantity: 1
+  start_date: 2020-01-29
+  start_price: 1.5
+  start_fee: 1
+  end_date: 2020-01-29
+  end_price: 1.5
+  end_fee: 1
+  pl_ratio: 1.5
+  pl_amount: 1
+  memo: MyText
+
+two:
+  member_id: MyString
+  stock_code: MyString
+  stock_name: MyString
+  transaction_type: MyString
+  buy_sell: MyString
+  owned_quantity: 1
+  start_date: 2020-01-29
+  start_price: 1.5
+  start_fee: 1
+  end_date: 2020-01-29
+  end_price: 1.5
+  end_fee: 1
+  pl_ratio: 1.5
+  pl_amount: 1
+  memo: MyText

@@ -1,0 +1,136 @@
+<!-- jQuery Datepicker 読み込み -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<!-- ヘッダータブ表示 -->
+<div class = "header-tab-wrapper">
+  <div class = "header-tab-container">
+    <a class = "header-tab" href = "/">保有銘柄</a>
+    <a class = "header-tab-click" href = "/stocks/new">新規取得</a>
+    <a class = "header-tab" href = "/performances">運用実績</a>
+    <a class = "header-tab" href = "/users/account_info">アカウント</a>
+  </div>
+</div>
+
+<div class="new-wrapper">
+  <div class="new-container">
+    <!-- <div class = "page-title">保有銘柄</div> -->
+    <div id = "new-title">
+      <img src = "/assets/shinki.png" alt ="" width = "150" height = "45">
+    </div>
+
+    <!-- 新規登録用入力フォーム -->
+    <%= form_tag("/stocks/new/create") do %>
+      <div class="new-form-body">
+
+        <!-- エラーメッセージ出力-->
+        <div class = "form-error-wrapper">
+          <% @stock.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @errors_message.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+
+        <!-- 銘柄コード入力フォーム-->
+        <label>[銘柄検索]</label>
+        <div class="form-stock_code">
+          <% if @stock.stock_code.present? %>
+            <input id="stock_serch" class = "input-serch grey-color" autocomplete="off">
+          <% else %>
+            <input id="stock_serch" class = "input-serch" placeholder="コード・銘柄名の一部を入力してください" autocomplete="off">
+          <% end %>
+        </div>
+
+        <!-- インクリメンタルサーチ生成用タグ -->
+        <div id = "is-container">
+          <div id="is_tag" style="width: 400px;"></div>
+        </div>
+        
+        <!-- 銘柄名　表示用 -->
+        <div id = "stock-info-box">
+          <div id = "stock-info-view">
+            <label id = "stock_code-view"><%= @stock.stock_code %></label>
+            <label id = "market_category-view"><%= @stock.market_category %></label>
+            <div id = "stock_name-view"><%= @stock.stock_name %></div>
+          </div>
+        </div>
+        <!-- 銘柄名　値の取得送信用（非表示）-->
+        <input id="stock_code" name="stock_code" value = <%= @stock.stock_code %>>
+        <input id="market_category" name="market_category" value = <%= @stock.market_category %>>
+        <input id= "stock_name" name= "stock_name" value = <%= @stock.stock_name %>>
+
+        <!-- 取引種別入力フォーム-->
+        <label>[取引種別]</label>
+        <div class='form-group'>
+          <div class='form-transaction_type'>
+            <% if @stock.transaction_type == "01" || @stock.transaction_type.blank? %>
+              <a><input type="radio" name="transaction_type" class = "radio" value="01" checked>現物買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="02">信用買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="03">信用売</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="04">NISA買</a>
+            <% elsif @stock.transaction_type == "02"%>
+              <a><input type="radio" name="transaction_type" class = "radio" value="01">現物買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="02" checked>信用買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="03">信用売</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="04">NISA買</a>
+            <% elsif @stock.transaction_type == "03"%>
+              <a><input type="radio" name="transaction_type" class = "radio" value="01">現物買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="02">信用買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="03" checked>信用売</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="04">NISA買</a>
+            <% elsif @stock.transaction_type == "04"%>
+              <a><input type="radio" name="transaction_type" class = "radio" value="01">現物買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="02">信用買</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="03">信用売</a>
+              <a><input type="radio" name="transaction_type" class = "radio" value="04" checked>NISA買</a>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- 保有数量入力フォーム-->
+        <label>[取得株数]</label>
+        <div class="form-owned_quantity">
+          <input id = "owned_quantity" name="owned_quantity" class = "input-form input-o-quantity" autocomplete = "off" value = <%= @stock.owned_quantity %>>株
+        </div>
+
+        <!-- 約定日入力フォーム-->
+        <label>[取得日]</label>
+        <div class="form-date">
+          <input type="text" id = "new-input-date" name="start_date" class = "input-form input-date" readonly autocomplete="off" value=<%= @stock.start_date %>>
+        </div>
+
+        <!-- 取得単価入力フォーム-->
+        <label>[取得単価]</label>
+        <div class="form-price">
+          <% if @price_type == "01" %>
+            <a><input type="radio" name="price_type" class="pt-radio new-pt-radio radio" id="new-pt-radio1" value="01" checked>1．手数料込みの取得単価を入力　</a>
+            <a><input type="radio" name="price_type" class="pt-radio new-pt-radio radio" id="new-pt-radio2" value="02">2．手数料を含まない約定単価を入力</a><br>
+            <input name="start_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@stock.start_price) %>>円
+          <% elsif @price_type == "02" %>
+            <a><input type="radio" name="price_type" class="pt-radio new-pt-radio radio" id="new-pt-radio1" value="01">1．手数料込みの取得単価を入力　</a>
+            <a><input type="radio" name="price_type" class="pt-radio new-pt-radio radio" id="new-pt-radio2" value="02" checked>2．手数料を含まない約定単価を入力</a><br>
+            <input name="start_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@stock.start_price) %>>円
+          <% end %>
+        </div>
+        <div class = "price-type-message">※2を選択の場合は、以下にご入力いただく[手数料]を用いて、取得単価を算出します</div>
+        
+        <!-- 手数料入力フォーム-->
+        <label>[手数料]</label><br>
+        <div class = "fee-container">
+          <% if @price_type == "01" %>
+            <input name="start_fee" id = "new-fee-form" class = "input-form input-fee grey-color" autocomplete="off" disabled>円
+          <% elsif @price_type == "02" %>
+            <input name="start_fee" id = "new-fee-form" class = "input-form input-fee " autocomplete="off" value=<%= @stock.start_fee %>>円
+          <% end %>
+        </div>
+      </div>  
+      <!-- 登録ボタン -->
+      <div class = "entry-button-box">
+        <input class = "entry-button new-button" type="submit" value="登 録">
+      </div>
+    <% end %>
+  </div>
+</div>

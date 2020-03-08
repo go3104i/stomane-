@@ -1,0 +1,64 @@
+<!-- /performances/:id/stock_operation/edit_e.html.erb -->
+<div class = "panel-container">
+  <div id = "edit-panel-title" class = "panel-title">
+    <img src = "/assets/hensyu.png" alt ="" width = "130" height = "45">
+  </div>
+  <div id = "edit-panel-message" class = "edit_e-panel-message">決済情報の変更を入力してください</div>
+  <!-- 編集用入力フォーム -->
+  <%= form_tag("/performances/#{@performance.id}/stock_operation/update") do %>
+    <div class="form-body">
+
+      <!-- エラーメッセージ出力-->
+      <% if @tab_select == "05" %>
+        <div class = "form-error-wrapper">
+          <% @performance.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- 決済株数入力フォーム-->
+      <label>[決済済み株数]</label>
+      <div class="form-owned_quantity">
+        <input id = "owned_quantity" name="owned_quantity" class = "edit_e-input-form input-o-quantity" autocomplete="off" value=<%= @performance.owned_quantity %>>株
+      </div>
+
+      <!-- 約定日入力フォーム-->
+      <label>[決済日]</label>
+      <div class="form-date">
+        <input type="text" id = "edit_e-input-date" name="end_date" class = "edit_e-input-form2 input-date" readonly autocomplete="off" value=<%= @performance.end_date %>>
+      </div>
+
+      <!-- 取得単価入力フォーム-->
+      <label>[決済単価]</label>
+      <div class="form-price">
+        <% if @price_type == "01" %>
+          <a><input type="radio" name="price_type" class="pt-radio edit-pt-radio radio" id="edit-pt-radio1" value="01" checked>1．手数料・諸費用込みの取得単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio edit-pt-radio radio" id="edit-pt-radio2" value="02">2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="end_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@performance.end_price) %>>円
+        <% elsif @price_type == "02" %>
+          <a><input type="radio" name="price_type" class="pt-radio edit-pt-radio radio" id="edit-pt-radio1" value="01">1．手数料・諸費用込みの取得単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio edit-pt-radio radio" id="edit-pt-radio2" value="02" checked>2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="end_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@performance.end_price) %>>円
+        <% end %>
+      </div>
+      <div class = "edit_e-pt-message">※2を選択の場合は、以下にご入力いただく<br>　[手数料・諸費用]を用いて、取得単価を算出します</div>
+      
+      <!-- 手数料入力フォーム-->
+      <label>[手数料・諸費用]</label><br>
+      <div class = "fee-container">
+        <% if @price_type == "01" %>
+          <input name="end_fee" id = "edit-fee-form" class = "edit_e-input-form2 input-fee fee-disabled" autocomplete="off" disabled>円
+        <% elsif @price_type == "02" %>
+          <input name="end_fee" id = "edit-fee-form" class = "edit_e-input-form2 input-fee " autocomplete="off" value=<%= @performance.end_fee %>>円
+        <% end %>
+      </div>
+
+      <!-- 登録ボタン　-->
+      <div class = "entry-button-box">
+        <input class = "entry-button edit-button" type="submit" value="登 録">
+      </div>
+
+    </div>
+  <% end %>
+</div>

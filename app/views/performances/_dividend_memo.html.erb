@@ -1,0 +1,31 @@
+<div class = "panel-container memo-container">
+  <div id = "memo-title2" class = "panel-title">
+    <img src = "/assets/memo.png" alt ="" width = "95" height = "43">
+  </div>
+  <!-- メモ用入力フォーム -->
+  <%= form_tag("/performances/#{@dividend.id}/dividend_operation/dividend_memo_update") do %>
+    <div class="form-body">
+
+      <!-- エラーメッセージ出力-->
+      <% if @tab_select == "06" %>
+        <div class = "form-error-wrapper">
+          <% @performance.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <!-- メモ入力フォーム-->
+      <label>[メモ]</label>
+      <div class="memo-form-box">
+        <textarea name="memo" class = "memo-form" placeholder="メモを入力してください"><%= @dividend.memo%></textarea>
+      </div>
+
+      <!-- 登録ボタン　-->
+      <div class = "memo-button-box">
+        <input class = "entry-button memo-button" type="submit" value="書き込み">
+      </div>
+
+    </div>
+  <% end %>
+</div>

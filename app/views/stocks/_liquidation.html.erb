@@ -1,0 +1,73 @@
+<div class = "panel-container">
+  <div id = "liquidation-title" class = "panel-title">
+    <img src = "/assets/kessai.png" alt ="" width = "130" height = "50">
+  </div>
+  <!-- 入力フォーム -->
+  <%= form_tag("/stocks/#{@stock.id}/operation/liquidation_update") do %>
+    <div class="form-body">
+      <div class = "panel-message">決済情報を入力してください</div>
+      <!-- エラーメッセージ出力-->
+      <% if @tab_select == "02" %>
+        <div class = "form-error-wrapper">
+          <% @errors_message.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @performance.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @stock.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <label>[決済株数]</label><br>
+      <div class = "quantity-form">
+        <% if @liquidation_type == "01" %>
+          <a><input type="radio" name="liquidation_type" class="liquidation_type quantity-radio" id="liquidation_type1" value="01" checked>全決済</a>
+          <a><input type="radio" name="liquidation_type" class="liquidation_type quantity-radio" id="liquidation_type2" value="02">部分決済</a><br>
+          <input id = "li-owned_quantity" name="owned_quantity" class = "input-form owned_quantity-disabled" autocomplete="off" value=<%= @stock.owned_quantity %> disabled>株<br>
+        <% elsif @liquidation_type == "02" %>
+          <a><input type="radio" name="liquidation_type" class="liquidation_type quantity-radio" id="liquidation_type1" value="01">全決済</a>
+          <a><input type="radio" name="liquidation_type" class="liquidation_type quantity-radio" id="liquidation_type2" value="02" checked>部分決済</a><br>
+          <input id = "li-owned_quantity" name="owned_quantity" class = "input-form" autocomplete="off" value=<%= @performance.owned_quantity %>>株<br>
+        <% end %>
+        <!-- 値取得用　非表示 -->
+        <input id="liquidation_type" value=<%= @stock.owned_quantity %>>
+      </div>
+
+      <label>[決済日]</label><br>
+      <input type = "text" id = "liquidation-input-date" name="end_date" class = "input-form input-date" readonly autocomplete="off" value=<%= @performance.end_date %>><br>
+
+      <!-- 約定単価入力フォーム-->
+      <label>[決済単価]</label>
+      <div class="form-price">
+        <% if @price_type == "01" %>
+          <a><input type="radio" name="price_type" class="pt-radio li-pt-radio radio" id="li-pt-radio1" value="01" checked>1．手数料・諸費用込みの決済単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio li-pt-radio radio" id="li-pt-radio2" value="02">2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="end_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@performance.end_price) %>>円
+        <% elsif @price_type == "02" %>
+          <a><input type="radio" name="price_type" class="pt-radio li-pt-radio radio" id="li-pt-radio1" value="01">1．手数料・諸費用込みの決済単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio li-pt-radio radio" id="li-pt-radio2" value="02" checked>2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="end_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@performance.end_price) %>>円
+        <% end %>
+      </div>
+      <div class = "price-type-message">※2を選択の場合は、以下にご入力いただく<br>　[手数料・諸費用]を用いて、決済単価を算出します</div>
+
+      <!-- 手数料入力フォーム-->
+      <label>[手数料・諸費用]</label><br>
+      <div class = "fee-container">
+        <% if @price_type == "01" %>
+          <input id = "li-fee-form" name="end_fee" class = "input-form input-fee fee-disabled" autocomplete="off" disabled>円
+        <% elsif @price_type == "02" %>
+          <input id = "li-fee-form" name="end_fee" class = "input-form input-fee" autocomplete="off" value=<%= @performance.end_fee %>>円
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 登録ボタン -->
+    <div class = "entry-button-box">
+      <input class = "entry-button liquidation-button" type="submit" value="決 済">
+    </div>
+  <% end %>
+</div>

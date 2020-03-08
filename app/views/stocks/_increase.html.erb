@@ -1,0 +1,57 @@
+<div class = "panel-container">
+  <div id = "increase-title" class = "panel-title">
+    <img src = "/assets/mashi.png" alt ="" width = "180" height = "45">
+  </div>
+  <!-- 入力フォーム -->
+  <%= form_tag("/stocks/#{@stock.id}/operation/increase_update") do %>
+    <div class="form-body">
+      <div id = "increase-message1" class = "panel-message">買増・売増情報を入力してください</div>
+      <div id = "increase-message2">※取得日は変更されません</div>
+
+      <!-- エラーメッセージ出力-->
+      <div class = "form-error-wrapper">
+        <% if @tab_select == "03" %>
+          <% @stock_render.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @errors_message.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <label class = "increase-label">[取得株数]</label><br>
+      <input id = "increase_quantity" name="owned_quantity" class = "input-form increase-input-form" autocomplete="off" value=<%= @stock_render.owned_quantity %>>株<br>
+
+      <!-- 取得単価入力フォーム-->
+      <label>[取得単価]</label>
+      <div class="form-price">
+        <% if @price_type == "01" %>
+          <a><input type="radio" name="price_type" class="pt-radio in-pt-radio radio" id="in-pt-radio1" value="01" checked>1．手数料・諸費用込みの決済単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio in-pt-radio radio" id="in-pt-radio2" value="02">2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="start_price" class = "input-form input-price" autocomplete="off" value=<%= seisho_helper(@stock_render.start_price)%>>円
+        <% elsif @price_type == "02" %>
+          <a><input type="radio" name="price_type" class="pt-radio in-pt-radio radio" id="in-pt-radio1" value="01">1．手数料・諸費用込みの決済単価を入力</a><br>
+          <a><input type="radio" name="price_type" class="pt-radio in-pt-radio radio" id="in-pt-radio2" value="02" checked>2．手数料・諸費用を含まない約定単価を入力</a><br>
+          <input name="start_price" class = "input-form input-price" autocomplete="off" value = <%= seisho_helper(@stock_render.start_price) %>>円
+        <% end %>
+      </div>
+      <div class = "price-type-message increase-pt-message">※2を選択の場合は、以下にご入力いただく<br>　[手数料・諸費用]を用いて、決済単価を算出します</div>
+
+      <!-- 手数料入力フォーム-->
+      <label>[手数料・諸費用]</label><br>
+      <div class = "fee-container">
+        <% if @price_type == "01" %>
+          <input id = "in-fee-form" name="start_fee" class = "input-form input-fee fee-disabled" autocomplete="off" disabled>円
+        <% elsif @price_type == "02" %>
+          <input id = "in-fee-form" name="start_fee" class = "input-form input-fee" autocomplete="off" value=<%= @stock_render.start_fee %>>円
+        <% end %>
+      </div>
+    </div>
+
+    <!-- 登録ボタン -->
+    <div class = "entry-button-box">
+      <input class = "entry-button increase-button" type="submit" value="追 加">
+    </div>
+  <% end %>
+</div>

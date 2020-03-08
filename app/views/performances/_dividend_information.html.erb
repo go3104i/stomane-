@@ -1,0 +1,70 @@
+<div id ="possession-info-box">
+  <div id = "possession-info-view">
+    <!-- 銘柄コード 銘柄名-->
+    <div id = "pi-top-box">
+      <label id = "pi-stock_code"><%= "[" + @stock_code + "]" + "　"%></label>
+      <label id = "pi-market_category"><%= @market_category %></label><br>
+      <label id = "pi-stock_name"><%= @stock_name %></label>
+    </div>
+
+    <table id = "possession-info-table">
+
+      <!-- 手書き演出用 -->
+      <tr>
+        <td class = "column-top"></td>
+        <td class = "record-top"></td>
+      </tr>
+
+      <tr>
+        <td class = "column">配当種別</td>
+        <td class = "record"><%= dividend_type_helper(@dividend_type) %></td>
+      </tr>
+
+      <tr>
+        <td class = "column">時期区分</td>
+        <td class = "record"><%= season_helper(@season) %></td>
+      </tr>
+
+      <tr>
+        <td class = "column">配当日</td>
+        <td id = "start_date_info" class = "record"><%= @dividend_date.strftime("%Y/%m/%d") %></td>
+      </tr>
+
+      <!-- 対象株数　ブランクの場合は（ー）を表示 -->
+      <tr>        
+        <td class = "column">対象株数</td>
+        <% if @dividend_quantity.blank?%>
+          <td class = "record">-</td>
+        <% else %>
+          <td class = "record"><%= @dividend_quantity.to_s(:delimited) %>株</td>
+        <% end %>
+      </tr>
+
+      <!-- 開始価格　ブランクの場合は（ー）を表示 -->
+      <tr>        
+        <td class = "column">１株配当金額</td>
+        <% if @dividend_price.blank?%>
+          <td class = "record">-</td>
+        <% else %>
+          <% d_price = seisho_helper(@dividend_price.round(2)) %>
+          <td class = "record"><%= d_price.to_s(:delimited) %>円</td>
+        <% end %>
+      </tr>
+
+      <tr>
+        <td class = "column">配当金等総額</td>
+        <td class = "record"><%= yen_helper @dividend_amount.to_s(:delimited) %></td>
+      </tr>
+
+      <!-- 手書き演出用 -->
+      <tr>
+        <td class = "column-bottom"></td>
+          <td class = "record-bottom"></td>
+      </tr>
+    </table><br>
+    <div id = "memo-box">
+      <div id = "memo-title">ＭＥＭＯ</div>
+      <div id = "memo"><%= simple_format(@memo) %></div>
+    </div>
+  </div>
+</div>

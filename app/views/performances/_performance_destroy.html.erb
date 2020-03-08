@@ -1,0 +1,12 @@
+<div class = "panel-title" id = "destroy-title">
+  <img src = "/assets/sakujyo.png" alt ="" width = "140" height = "65">
+</div>
+<div class = "panel-message" id = "destroy-message">決済済みの銘柄情報を<br>削除してよろしいですか？</div>
+<div class = "destroy-container">
+  <%= form_tag("/performances/#{@performance.id}/stock_operation/destroy") do %>
+    <!-- 登録ボタン -->
+    <div id = "destroy-button-box">
+      <input class = "entry-button" id = "destroy-button" type="submit" value="削除">
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,2 @@
+class Stockmaster < ApplicationRecord
+end

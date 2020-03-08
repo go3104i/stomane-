@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stomane</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class = "wrapper">
+      <header>
+        <div class = "header-container">
+          <div class="header-logo">
+            <img src = "/assets/84d12c.png" alt ="" width = "320" height = "80">
+            <img class = "header-message" src = "/assets/message.png" alt ="" width = "600" height = "25">
+          </div>
+        </div>
+      </header>
+      <div class = "body-container">
+        <div class = "body-top">
+          <div class = "body-content">
+            <div class = "table-cell">
+              <%= yield %>
+            </div>
+          </div>
+          <div class = "footer-container">
+            <div class = "footer-wrapper">
+              <div class = "footer-content"></div>
+              <div class="header-logo">
+                <img class = "footer-name" src = "/assets/name.png" alt ="" width = "200" height = "23">
+              </div>
+            </div>
+          </div>   
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

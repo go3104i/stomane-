@@ -1,0 +1,56 @@
+<div class = "panel-container">
+  <div id = "dividend-title" class = "panel-title">
+    <img src = "/assets/haitoochi.png" alt ="" width = "190" height = "45">
+  </div>
+  <!-- 入力フォーム -->
+  <%= form_tag("/stocks/#{@stock.id}/operation/dividend_cs_create") do %>
+    <div class="dividend_c-form-body">
+      <div class = "dividend_c-message">
+        <a class = "m1">配当落調整金支払い情報を入力して<br>ください</a><br>
+      </div>
+      <!-- エラーメッセージ出力-->
+      <% if @tab_select == "04" %>
+        <div class = "form-error-wrapper">
+          <% @dividend.errors.full_messages.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+          <% @errors_message.each do |message| %>
+            <div class="form-error"><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <div class='c-form-group'>
+        <label>[配当種別]</label>
+        <div class='c-form-season'>
+          <% if @dividend.season == "01" || @dividend.season.blank? %>
+            <a><input type="radio" name="season" value="01" checked>期末配当</a>
+            <a><input type="radio" name="season" value="02">中間配当</a>
+            <a><input type="radio" name="season" value="03">四半期配当</a>
+          <% elsif @dividend.season == "02"%>
+            <a><input type="radio" name="season" value="01">期末配当</a>
+            <a><input type="radio" name="season" value="02" checked>中間配当</a>
+            <a><input type="radio" name="season" value="03">四半期配当</a>
+          <% elsif @dividend.season == "03"%>
+            <a><input type="radio" name="season" value="01">期末配当</a>
+            <a><input type="radio" name="season" value="02">中間配当</a>
+            <a><input type="radio" name="season" value="03" checked>四半期配当</a>
+          <% end %>
+        </div>
+      </div>
+
+      <label>[支払日]</label><br>
+      <input type = "text" id = "dividend-input-date" name="dividend_date" class = "input-form input-date dividend_c-input-form" readonly autocomplete="off" value=<%= @dividend.dividend_date %>><br>
+
+      <label>[配当落調整金支払額]　</label>
+      <div class="form-price">
+          <input id = "dividend_amount" name="dividend_amount" class = "input-form input-dividend dividend_c-input-form2" autocomplete="off" value = <%= seisho_helper(@dividend.dividend_amount) %>>円
+      </div>
+    </div>
+
+    <!-- 登録ボタン -->
+    <div class = "entry-button-box">
+      <input class = "entry-button dividend_c-button" type="submit" value="登 録">
+    </div>
+  <% end %>
+</div>

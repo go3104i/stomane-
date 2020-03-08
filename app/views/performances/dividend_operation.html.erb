@@ -1,0 +1,101 @@
+<!-- jQuery Datepicker 読み込み -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+
+<!-- ヘッダータブ表示 -->
+<div class = "header-tab-wrapper">
+  <div class = "header-tab-container">
+    <a class = "header-tab" href = "/">保有銘柄</a>
+    <a class = "header-tab" href = "/stocks/new">新規取得</a>
+    <a class = "header-tab-click" href = "/performances">運用実績</a>
+    <a class = "header-tab" href = "/users/account_info">アカウント</a>
+  </div>
+</div>
+
+<div class = "operation-container clearfix">
+  <div class = "possession-information-wrap">
+    <!-- 銘柄情報表示 -->
+    <%= render '/performances/dividend_information' %>
+  </div>
+
+  <div class="tab_wrap">
+    <% if @tab_select == "01" %>
+      <input class = "tab-input tab-bedman" id="tab1" type="radio" name="tab_btn" checked>
+      <input class = "tab-input tab-no-bedman" id="tab5" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab6" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab7" type="radio" name="tab_btn">
+    <% elsif @tab_select == "05" %>
+      <input class = "tab-input tab-bedman" id="tab1" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab5" type="radio" name="tab_btn" checked>
+      <input class = "tab-input tab-no-bedman" id="tab6" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab7" type="radio" name="tab_btn">
+    <% elsif @tab_select == "06" %>
+      <input class = "tab-input tab-bedman" id="tab1" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab5" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab6" type="radio" name="tab_btn" checked>
+      <input class = "tab-input tab-no-bedman" id="tab7" type="radio" name="tab_btn">
+    <% elsif @tab_select == "07" %>
+      <input class = "tab-input tab-bedman" id="tab1" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab5" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab6" type="radio" name="tab_btn">
+      <input class = "tab-input tab-no-bedman" id="tab7" type="radio" name="tab_btn" checked>
+    <% end %>
+
+    <div class="tab_area">
+      <label class="tab1_label" for="tab1">
+        <% if @tab_select == "01" %>
+          <img  class = "dark-bedman" src = "/assets/dark-bedman.png" alt ="" width = "25" height = "28">
+          <img  class = "light-bedman no-display" src = "/assets/light-bedman.png" alt ="" width = "25" height = "28">
+        <% else %>
+          <img  class = "light-bedman" src = "/assets/light-bedman.png" alt ="" width = "25" height = "28">
+          <img  class = "dark-bedman no-display" src = "/assets/dark-bedman.png" alt ="" width = "25" height = "28">
+        <% end %>
+      </label>
+      <label class="tab5_label" for="tab5">編集</label>
+      <label class="tab6_label" for="tab6">メモ</label>
+      <label class="tab7_label" for="tab7">削除</label>
+    </div>
+    <div class="panel_area">
+      <div id="panel1" class="tab_panel">
+        <div id = "fukidashi-box">
+
+          <% if flash[:dividend] %>          
+            <img  id = "fukidashi" src = "/assets/fukidashi.png" alt ="" width = "350" height = "150">
+            <figcaption class = "fukidashi-message4">配当情報を<br>更新しました！</figcaption>
+          <% elsif flash[:memo_update] %>
+            <img  id = "fukidashi" src = "/assets/fukidashi.png" alt ="" width = "350" height = "150">
+            <figcaption class = "fukidashi-message6">メモの書き込みを<br>更新しました！</figcaption>
+          <% elsif flash[:error] %>
+            <img  id = "fukidashi" src = "/assets/fukidashi.png" alt ="" width = "350" height = "150">
+            <figcaption class = "fukidashi-message7"><%= flash[:error] %></figcaption>
+          <% else %>
+            <img  id = "fukidashi" src = "/assets/fukidashi.png" alt ="" width = "350" height = "250">
+            <figcaption id = "fukidashi-message1">こちらから保有銘柄の各種操作を<br>行うことができます<br><br>希望する操作種別を上のタブから<br>選択してください</figcaption>
+          <% end %>
+        </div>
+      </div>
+
+      <% if @dividend_type == "01" || @dividend_type == "04" %>
+        <div id="panel5" class="tab_panel">
+          <%= render '/performances/dividend_edit' %>
+        </div>
+      <% elsif @dividend_type == "02" %>
+        <div id="panel5" class="tab_panel">
+          <%= render '/performances/dividend_cb_edit' %>
+        </div>      
+      <% elsif @dividend_type == "03" %>
+        <div id="panel5" class="tab_panel">
+          <%= render '/performances/dividend_cs_edit' %>
+        </div>
+      <% end %>
+
+      <div id="panel6" class="tab_panel">
+        <%= render '/performances/dividend_memo' %>
+      </div>
+      <div id="panel7" class="tab_panel">
+        <%= render '/performances/dividend_destroy' %>
+      </div>
+    </div>
+  </div>
+</div>

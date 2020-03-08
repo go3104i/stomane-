@@ -1,0 +1,15 @@
+current directory: /Users/Satoshi/development/stomane/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+/Users/Satoshi/.rbenv/versions/2.7.0/bin/ruby -I /Users/Satoshi/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200130-77031-16yjvbl.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Satoshi/development/stomane/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /Users/Satoshi/development/stomane/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.bundle
+
+current directory: /Users/Satoshi/development/stomane/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20200130-77031-17r1lpi/skiptrace/internal

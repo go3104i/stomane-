@@ -1,0 +1,1104 @@
+// Place all the styles related to the stocks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+//---------------------共通S---------------------
+//評価損益率や評価損益額のプラス・マイナスによる文字の色づけ
+.color-green{
+  color:#0d7004;
+}
+.color-purple{
+  color:#901596;
+}
+
+ //入力フォーム
+.form-body label{
+   font-size:13px;
+}
+
+//ラジオボタンに付随する文字のサイズ
+.radio-font{
+  font-size:15px;
+}
+
+.input-form{
+   width:100px;
+   font-size:100%;
+   height:20px;
+   margin-bottom:10px;
+}
+.input-serch{
+  width:250px;
+  font-size:75%;
+  height:20px;
+  margin-bottom:0px;
+}
+.input-s-code{
+  width:100px;
+}
+.input-s-name{
+  width:300px;
+}
+.input-price{
+   margin-top:5px;
+}
+.input-o-quantity{
+  width:100px;
+}
+.input-date{
+  width:100px;
+  height:20px;
+  font-size:100%;
+}
+.form-transaction_type{
+   margin-bottom:10px;
+}
+.form-transaction_type a,.form-season a{
+  //display:block;
+  position:relative;
+  padding-left:1em;
+  margin-right:5px;
+  font-size:16px;
+}
+.form-transaction_type input,.form-season input{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  margin:auto;
+}
+.form-price a{
+  position:relative;
+  padding-left:1em;
+  margin-right:5px;
+  font-size:15px;
+}
+.form-price .pt-radio{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  margin:auto;
+}
+.quantity-form a{
+  position:relative;
+  padding-left:1em;
+  margin-right:5px;
+  font-size:15px;
+}
+.quantity-form .quantity-radio{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  margin:auto;
+}
+
+.entry-button-box{
+  text-align: center;
+}
+.entry-button{
+  //height: 20px;
+  padding :10px 70px;
+  margin-top:10px;
+  margin-bottom:10px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor:pointer;
+}
+.entry-button.hover{
+  cursor:pointer;
+}
+//エラーメッセージ
+.form-error-wrapper{
+  font-size:13px;
+  color:#e32523;
+  margin-bottom:10px;
+}
+
+//-----------------共通タブメニューS-----------------
+//各htmlファイルの先頭に記載　力技
+.header-tab-wrapper{
+  background-color: #84d12c;
+}
+.header-tab-container{
+  width:65%;
+  text-align: center;
+}
+.header-tab{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width:20%;
+  //width:50px;
+  height:32px;
+  margin:0 5px;
+  display:inline-block;
+  padding-top:10px;
+  padding-bottom:3px;
+  color:#404040;
+  background:#af7aae;
+  text-align:center;
+  font-size:16px;
+  cursor:pointer;
+  transition:ease 0.2s opacity;
+  text-decoration: none;
+}
+.header-tab-click{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width:20%;
+  //width:50px;
+  height:32px;
+  margin:0 5px;
+  display:inline-block;
+  padding-top:10px;
+  padding-bottom:3px;
+  color:#2b2b2b;
+  background:seashell;
+  text-align:center;
+  font-size:16px;
+  cursor:pointer;
+  transition:ease 0.2s opacity;
+  text-decoration: none;
+}
+//-----------------共通タブメニューE-----------------
+//---------------------共通E---------------------
+//----------------application.html.erb-S--------------
+body{
+  margin:0px;
+  padding:0px;
+  min-width: 1000px;
+  background-color: #cea15d;
+}
+
+/* 親要素にclearfix追加 */
+.clearfix:after{
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.wrapper{
+  display:flex;
+  flex-direction: column;
+}
+//-----------------ヘッダーS-----------------
+header{
+  //background-color: crimson;
+  background-color: #84d12c;
+  height: 95px;
+}
+
+//サイトタイトルロゴ
+.header-logo{
+  //float:left;
+  padding-top:5px;
+  margin-left:20px;
+}
+
+.header-message{
+  float:right;
+  margin-top:58px;
+  margin-right:15px;
+}
+//-----------------ヘッダーE-----------------
+//-----------------ボディS-----------------
+.body-container{
+}
+
+//ヘッダータブの横の緑の部分
+.body-top{
+  background-color: #84d12c;
+  height:45px;
+}
+
+.body-content{
+  //position: absolute;
+  max-width:900px;
+  //width: 85;
+  margin: auto;
+  min-height: 100vh;
+  background-color: seashell;
+}
+
+//-----------------ボディE-----------------
+//-----------------フッターS-----------------
+.footer-wrapper{
+  margin-top: auto;
+
+  height:100px;
+  background-color: #99774f;
+}
+.footer-name{
+  float:right;
+  margin-top : 50px;
+  padding-right:20px;
+}
+//-----------------フッターE-----------------
+//----------------application.html.erb-E--------------
+//--------------possession.html.erb--------------
+//全体
+.possession-wrapper{
+  width : 93%;
+  margin: 25px auto auto auto;
+  padding-bottom:40px;
+}
+
+.flash-message{
+  margin-bottom:20px;
+}
+
+//「保有銘柄」イメージ
+.hoyu{
+  display: block;
+}
+
+//保有銘柄表
+.possession-table{
+  color:#2b2b2b;
+  //表の枠線を単線にする
+  border-collapse: collapse;
+  
+}
+//保有ポジション一覧表のカラム名表示
+.th_possession{
+  background-color: #a2ccdb;
+  border:1px solid #707070;
+  //border: none;
+  //box-shadow: 1px 1px 1px 1px #c1ced7;
+  font-weight: normal;
+  font-size:15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+//保有ポジション一覧表のレコード表示
+.td_possession{
+  border:1px solid #707070;
+  font-size:15px;
+  padding: 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.color-sign td{
+  //transition: 3.0s ;
+  background-color: #d7f3ff;
+}
+//サマリー表
+.summary-table{
+  width:80%;
+  color:#2b2b2b;
+  //表の枠線を単線にする
+  border-collapse: collapse;
+}
+.tr_possession2{
+  background-color: white;
+}
+.th_possession2{
+  width:25%;
+  background-color: #90b5bf;
+  border:1px solid #707070;
+  //border: none;
+  //box-shadow: 1px 1px 1px 1px #c1ced7;
+  font-weight: normal;
+  font-size:15px;
+  padding:4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.td_possession2{
+  text-align: center;
+  border:1px solid #707070;
+  font-size:19px;
+  padding: 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+//保有銘柄一覧表の特定のカラム内のテキストを右寄せで表示
+.right{
+  text-align: right;
+}
+
+//保有銘柄一覧表の特定のカラムの幅等の指定
+.s-code{
+  width:40px;
+  max-width: 40px;
+  text-align: center;
+  letter-spacing: -1px;
+}
+.s-name{
+  width:180px;
+  max-width:180px;
+  letter-spacing: -2px;
+}
+.t-type{
+  width:47px;
+  max-width: 47px;
+  text-align: center;
+  letter-spacing: -1px;
+}
+.date{
+  width:70px;
+  max-width: 70px; 
+  text-align: center;
+  letter-spacing: -1px;
+}
+.o-quantity{
+  width:78px;
+  max-width: 78px;
+}
+.tanka{
+  width:102px;
+  max-width: 102px;
+}
+.c-price{
+  width:80px;
+  max-width: 80px;
+}
+.pl-ratio{
+  width:82px;
+  max-width: 82px;
+}
+.pl-amount{
+  width:108px;
+  max-width: 108px;
+}
+
+table a{
+  //text-decoration: none;
+  color: #2d3133;
+}
+
+//保有ポジション一覧レコードにポインター表示
+tbody .tr_possession{
+  cursor:pointer;
+  background-color: white;
+}
+
+//保有ポジション一覧ホバーレコードに色付け
+tbody .tr_possession:hover    {
+  //background: honeydew;
+  //background-color: mintcream;
+  background-color: #ffe77c;
+}
+
+.summary{
+  padding-top:25px;
+  padding-left:2px;
+}
+//--------------operation.html.erb--------------
+//全体
+.operation-container{
+  display: flex;
+  background-color: seashell;
+}
+
+//個別銘柄詳細情報　全体
+.possession-information-wrap{
+  width :320px;
+  padding-top:30px;
+  padding-left:40px;
+}
+
+//個別銘柄オペレーションボックス　全体
+.tab_wrap{
+  width:440px;
+  padding-top:20px;
+  padding-right: 5px;
+  padding-left:60px;
+  padding-bottom:40px;
+  margin-top: 5px;
+}
+.tab-input[type="radio"]{
+  display:none;
+}
+//display: flex; 高さを揃える
+.tab_area{
+  font-size:0;
+  margin:0 10px;
+  display: flex;
+}
+.tab1_label,.tab7_label{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  //width:65px;
+  width:130px;
+  height:32px;
+  margin:0 5px;
+  display:inline-block;
+  padding-top:13px;
+  padding-bottom:0px;
+  color:#404040;
+  background:#d7f3ff;
+  text-align:center;
+  font-size:14px;
+  cursor:pointer;
+  //transition:ease 0.2s opacity;
+}
+.tab2_label,.tab4_label,.tab5_label,.tab6_label,.tab8_label{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  //width:85px;
+  width:170px;
+  height:32px;
+  margin:0 5px;
+  display:inline-block;
+  padding-top:13px;
+  padding-bottom:0px;
+  color:#404040;
+  background:#d7f3ff;
+  text-align:center;
+  font-size:14px;
+  cursor:pointer;
+  //transition:ease 0.2s opacity;
+}
+.tab3_label{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  //width:85px;
+  width:170px;
+  height:32px;
+  margin:0 5px;
+  display:inline-block;
+  padding-top:4px;
+  padding-bottom:9px;
+  color:#404040;
+  background:#d7f3ff;
+  text-align:center;
+  font-size:13px;
+  cursor:pointer;
+  //transition:ease 0.2s opacity;
+}
+
+.tab_area label:hover{
+  //opacity:0.5;
+}
+
+#tab1:checked ~ .tab_area .tab1_label{background:#a2ccd6; color:#000;}
+#tab1:checked ~ .panel_area #panel1{display:block;}
+#tab2:checked ~ .tab_area .tab2_label{background:#a2ccd6; color:#000;}
+#tab2:checked ~ .panel_area #panel2{display:block;}
+#tab3:checked ~ .tab_area .tab3_label{background:#a2ccd6; color:#000;}
+#tab3:checked ~ .panel_area #panel3{display:block;}
+#tab4:checked ~ .tab_area .tab4_label{background:#a2ccd6; color:#000;}
+#tab4:checked ~ .panel_area #panel4{display:block;}
+#tab5:checked ~ .tab_area .tab5_label{background:#a2ccd6; color:#000;}
+#tab5:checked ~ .panel_area #panel5{display:block;}
+#tab6:checked ~ .tab_area .tab6_label{background:#a2ccd6; color:#000;}
+#tab6:checked ~ .panel_area #panel6{display:block;}
+#tab7:checked ~ .tab_area .tab7_label{background:#a2ccd6; color:#000;}
+#tab7:checked ~ .panel_area #panel7{display:block;}
+#tab8:checked ~ .tab_area .tab8_label{background:#a2ccd6; color:#000;}
+#tab8:checked ~ .panel_area #panel8{display:block;}
+
+//operation.html.erbで表示するパネル
+.panel-container{
+  width:76%;
+  margin-left:53px;
+  padding-top:25px;
+}
+
+.panel-title{
+  margin:auto;
+  text-align: center;
+}
+
+.panel-message{
+  font-size:15px;
+  padding-bottom:10px;
+}
+
+.panel_area{
+  //min-height:530px;
+  background:#a2ccd6;
+  box-shadow: 0 2px 6px #c1ced7;
+}
+
+.tab_panel{
+  width:100%;
+  min-height:613px;
+  //background-color: green;
+  display:none;
+}
+//.tab_panel p{font-size:14px; letter-spacing:1px; text-align:center;}
+
+.no-display{
+  display:none;
+}
+
+#fukidashi-box{
+  position: relative;
+  text-align: center;
+  margin: auto;
+  width: 80%;
+  //background-color: green;
+}
+#fukidashi{
+  padding-top:30px;
+  padding-left:0px;
+}
+#fukidashi-message1{
+  position: absolute;
+  font-size: 15px;
+  bottom:60px;
+  left:60px;
+}
+.fukidashi-message2{
+  position: absolute;
+  text-align: center;
+  width:70%;
+  font-size: 18px;
+  letter-spacing:3px;
+  bottom:45px;
+  left:55px;
+}
+.fukidashi-message3{
+  position: absolute;
+  text-align: center;
+  font-size: 19px;
+  letter-spacing:6px;
+  bottom:45px;
+  left:80px;
+}
+.fukidashi-message4{
+  position: absolute;
+  text-align: center;
+  width:70%;
+  font-size: 19px;
+  letter-spacing:6px;
+  bottom:45px;
+  left:55px;
+}
+.fukidashi-message5{
+  position: absolute;
+  text-align: center;
+  font-size: 19px;
+  letter-spacing:6px;
+  bottom:45px;
+  left:82px;
+}
+.fukidashi-message6{
+  position: absolute;
+  text-align: center;
+  font-size: 19px;
+  letter-spacing:6px;
+  bottom:43px;
+  left:80px;
+}
+.fukidashi-message7{
+  position: absolute;
+  text-align: center;
+  width:65%;
+  font-size: 17px;
+  letter-spacing:6px;
+  bottom:45px;
+  left:60px;
+}
+
+//--------------_possession_information.html.erb--------------
+//保有ポジション詳細情報　枠
+#possession-info-box {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  //margin: 2.5em auto;
+  margin-top:32px;
+  margin-bottom:50px;
+  padding: 10px 20px 20px 12px;
+  //color: #770000;/* 文字色 */
+  color: black;/* 文字色 */
+  background-color: #e8ddbd; /*枠背景色*/
+  box-shadow: inset 0 0 40px rgba(204, 186, 136,1), 0 2px 2px #ccc;
+}
+
+#possession-info-box::before {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 125px;
+  height: 36px;
+  left: 35%;
+  top: -16px;
+  background-color: rgba(204, 186, 136,0.3);/*テープ色*/
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  transform: rotate( -3deg ); /*テープ角度*/
+}
+#possession-info-view{
+  margin:auto;
+  width:328px;
+}
+#pi-top-box{
+  width:87%;
+  text-align: center;
+  margin: 40px auto 20px auto;
+  //white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#pi-stock_code,#pi-market_category{
+  font-size: 14px;
+}
+#pi-stock_name{
+  font-size: 18px;
+}
+#possession-info-table{
+  margin:auto;
+  //表の枠線を単線にする
+  border-collapse: collapse;
+}
+
+#possession-info-table td{
+  font-size:15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+//カラム
+.column{
+  text-align: center;
+  padding-right:0px;
+  border:1px solid #707070;
+  border-left: none;
+  padding:3px 5px 3px 5px;
+  max-width:110px;
+  min-width:110px;
+}
+.column-top{
+  border:1px solid #707070;
+  border-left: none;
+  border-top:none;
+  height:1px;
+}
+.column-bottom{
+  border:1px solid #707070;
+  border-left: none;
+  border-bottom:none;
+  height:4px;
+}
+//レコード
+.record{
+  border:1px solid #707070;
+  border-right: none;
+  padding:3px 15px 3px 10px;
+  max-width:130px;
+  min-width:110px;
+  text-align: right;
+}
+.record-top{
+  border:1px solid #707070;
+  border-right: none;
+  border-top:none;
+  height:1px;
+}
+.record-bottom{
+  border:1px solid #707070;
+  border-right: none;
+  border-bottom:none;
+  height:4px;
+}
+#memo-box{
+  width:87%;
+  //background-color: green;
+  margin: 0px auto 75px auto;
+}
+#memo-title{
+  text-align: center;
+  width:85%;
+  margin:0px auto 12px auto;
+  border-bottom:1px dashed #707070;
+}
+#memo{
+  font-size:15px;
+  width:95%;
+  margin:auto;
+  //background-color: pink;
+}
+//--------------new.html.erb-S------------
+//全体
+.new-wrapper{
+  height:900;
+  background-color: #cea15d;
+}
+.new-container{
+  width:65%;
+  background-color: seashell;
+}
+
+#new-title{
+  text-align: center;
+  padding-top:25px;
+}
+
+.new-form-body{
+  padding-top:5px;
+  padding-left:35px;
+}
+.new-form-body label{
+  font-size:13px;
+}
+#stock-info-box {
+  position: relative;
+  width: 87%;
+  height: 85px;
+  //margin: 2.5em auto;
+  margin-top:32px;
+  margin-bottom:20px;
+  padding: 10px 20px 20px 12px;
+  //color: #770000;/* 文字色 */
+  color: black;/* 文字色 */
+  background-color: #e8ddbd; /*枠背景色*/
+  box-shadow: inset 0 0 40px rgba(204, 186, 136,1), 0 2px 2px #ccc;
+ }
+ #stock-info-box::before {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 140px;
+  height: 35px;
+  left: 35%;
+  top: -16px;
+  background-color: rgba(204, 186, 136,0.3);/*テープ色*/
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  transform: rotate( -3deg ); /*テープ角度*/
+ }
+
+#stock-info-view{
+  //background-color: #b6f5f2;
+  margin-left:10px;
+  margin-top:20px;
+  width:460px;
+  height: 80px;
+  //white-space: nowrap;
+  //text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#stock_name-view{
+  //height: 60px;
+  font-size: 18px;
+  //box-shadow: 0 2px 6px #c1ced7;
+  //background-color: #84d12c;
+}
+
+#stock_code,#market_category,#stock_name,#liquidation_type,#dividend_target{
+  display: none;
+}
+
+.price-type-message{
+  margin-bottom:10px;
+  font-size:13px;
+}
+
+.grey-color{
+  background-color: lightgrey;
+}
+
+.new-button{
+  margin-top:25px;
+  margin-bottom:30px;
+}
+
+//--------------new.html.erb-E------------
+//--------------インクリメンタルサーチ用--------------
+
+#is_tag{
+  margin-bottom:30px;
+  display: none;
+}
+
+//インクリメンタルサーチの銘柄全体
+.is_stock:hover{
+  background-color: #ffe77c;
+}
+.is_stock{
+  background: white;
+  //display: inline;
+  padding-bottom:1px;
+  font-size: 13px;
+}
+//インクリメンタルサーチの銘柄コード
+.is_code{
+  display:table-cell;
+  width:50px
+  //background-color: green;
+}
+
+//インクリメンタルサーチの銘柄名
+.is_name{
+  display:table-cell;
+  //background-color: blue;
+}
+
+//インクリメンタルサーチの市場名
+.is_market{
+  display: none;
+}
+//--------------liquidation.html.erb-S------------
+#liquidation-title{
+  margin-bottom:20px;
+}
+
+.liquidation-button{
+  margin-top:25px;
+  margin-bottom:40px;
+}
+//--------------liquidation.html.erb-E------------
+//--------------increase.html.erb-S------------
+#increase-title{
+  margin-bottom:30px;
+}
+#increase-message1{
+  margin-bottom:0px;
+}
+#increase-message2{
+  font-size:13px;
+  margin-bottom:15px;
+}
+.increase-input-form{
+  margin-bottom:35px;
+}
+.increase-pt-message{
+  margin-bottom:20px;
+}
+.increase-button{
+  margin-top:30px;
+  margin-bottom:40px;
+}
+//-----------------increase.html.erb-E------------
+//-----------------dividend.html.erb-S---------------
+.dividend-form-body{
+  //padding-top:5px;
+  padding-left:10px;
+}
+.dividend-form-body label{
+  font-size:13px;
+}
+#dividend-title{
+  margin-bottom:6px;
+}
+.dividend-message{
+  margin-bottom:10px;
+}
+.dividend-message .m1{
+  font-size:15px;
+}
+.dividend-message .m2{
+  font-size:13px;
+}
+.m3{
+  font-size:11px;
+}
+.form-season{
+  margin-bottom:10px;
+}
+.dividend-input-form{
+  margin-bottom:18px;
+}
+.dividend-input-form2{
+  width:100px;
+  font-size:100%;
+  height:20px;
+  margin-bottom:5px;
+}
+#dividend_quantity{
+  margin-top:5px;
+}
+#calculation-button{
+  padding :4px 15px;
+  margin-top:0px;
+  margin-bottom:18px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor:pointer;
+}
+.dividend-button{
+  //margin-top:5px;
+  margin-bottom:30px;
+}
+//-----------------dividend.html.erb-E---------------
+//-----------------dividend_cs.html.erb-S---------------
+.dividend_c-form-body{
+  //margin-top:46px;
+  //margin-left:27px;
+  margin: 46px auto 0px auto;
+  width:82%;
+  //background-color: pink;
+}
+.dividend_c-message{
+  padding-bottom:26px;
+}
+.c-form-group{
+  padding-top:26px;
+}
+.c-form-season{
+  margin-bottom:46px;
+}
+.dividend_c-input-form{
+  margin-bottom:46px;
+}
+.dividend_c-input-form2{
+  margin-bottom:60px;
+}
+.dividend_c-button{
+  margin-bottom:50px;
+}
+//-----------------dividend_cs.html.erb-E---------------
+//-----------------edit.html.erb-S---------------
+.edit-button{
+  margin-top:20px;
+  margin-bottom:35px;
+}
+
+#edit-panel-title{
+  padding-bottom:10px;
+}
+
+//-----------------edit.html.erb-E---------------
+//-----------------memo.html.erb-S---------------
+.memo-container{
+  //background-color: pink;
+  width:62%;
+  margin-left:80px;
+}
+#memo-title2{
+  margin-bottom:30px;
+}
+.memo-form{
+  width:100%;
+  height:320px;
+  font-size: 15px;
+}
+.memo-button-box{
+  text-align: center;
+  margin :40px auto 20px auto;
+}
+//-----------------memo.html.erb-E-----------------
+//-----------------destroy.html.erb-S-----------------
+#destroy-title{
+  padding-top:85px;
+  text-align: center;
+}
+#destroy-message{
+  text-align: center;
+  font-size:18px;
+  letter-spacing: 4px;
+  margin-top:60px;
+  margin-bottom:30px;
+}
+#destroy-button-box{
+  margin:auto;
+  text-align: center;
+}
+//-----------------destroy.html.erb-E-----------------
+//-----------------performance.html.erb-S-----------------
+.haitoto{
+  padding-top:25px;
+  padding-left:2px;
+}
+.t-type2{
+  width:60px;
+  max-width: 60px;
+  text-align: center;
+}
+.o-quantity2{
+  width:70px;
+  max-width: 70px;
+  letter-spacing: -1px;
+}
+.tanka2{
+  width:91px;
+  max-width: 91px;
+  letter-spacing: -1px;
+}
+.pl-ratio2{
+  width:80px;
+  max-width: 80px;
+  //letter-spacing: -1px;
+}
+.pl-amount2{
+  width:110px;
+  max-width: 110px;
+  //letter-spacing: -1px;
+}
+.s-code2{
+  width:45px;
+  max-width: 45px;
+  text-align: center;
+}
+.s-name2{
+  width:265px;
+  max-width:265px;
+  letter-spacing: -2px;
+}
+.d-type{
+  width:100px;
+  max-width: 100px;
+  text-align: center;
+}
+.season{
+  width:50px;
+  max-width: 50px;
+  text-align: center;
+}
+.d-tanka{
+  width:80px;
+  max-width:80px;
+}
+.d-amount{
+  width:105px;
+  max-width: 105px;
+}
+//-----------------performance.html.erb-E-----------------
+//-----------------stock_operation.html.erb-E---------------
+.fukidashi-message8{
+  position: absolute;
+  text-align: center;
+  width:70%;
+  font-size: 19px;
+  letter-spacing:8px;
+  bottom:52px;
+  left:55px;
+}
+
+//-----------------stock_operation.html.erb-S---------------
+//-----------------dividend_edit.html.erb-S---------------
+.edit_e-panel-message{
+  font-size:15px;
+  margin-bottom:20px;
+}
+.edit_e-input-form{
+  width:100px;
+  font-size:100%;
+  height:20px;
+  margin-bottom:20px;
+}
+.edit_e-input-form2{
+  width:100px;
+  font-size:100%;
+  height:20px;
+  margin-bottom:21px;
+}
+.edit_e-pt-message{
+  font-size:13px;
+  margin-bottom:21px;
+}
+//-----------------dividend_edit.html.erb-E---------------
+//-----------------dividend_cs.html.erb-S---------------
+
+//-----------------dividend_cs.html.erb-E---------------
+//---------dividend_information.html.erb-S--------
+
+//---------dividend_information.html.erb-E--------
+//--------------account_info.html.erb-S------------
+.kojichu{
+  text-align: center;
+  margin-top: 150px;
+}
+//--------------account_info.html.erb-E------------
