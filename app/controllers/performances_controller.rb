@@ -1,15 +1,27 @@
 class PerformancesController < ApplicationController
 
   def performances
+
+    #ユーザー情報読み込み
     @user = User.find_by(user_id: session[:user_id])
+    if @user == nil
+      @user = User.new
+    end
+
+    #ユーザーIDと一致する最初のレコードを抽出
     @performances = Performance.find_by(user_id: session[:user_id])
+    #ユーザーIDと一致するレコードが１行でもある場合、ユーザーIDと一致する全レコードを抽出
     if @performances != nil
       @performances = Performance.where(user_id: session[:user_id]).order(end_date: "ASC")
     end
+
+     #ユーザーIDと一致する最初のレコードを抽出
     @dividends = Dividend.find_by(user_id: session[:user_id])
+    #ユーザーIDと一致するレコードが１行でもある場合、ユーザーIDと一致する全レコードを抽出
     if @dividends != nil
       @dividends = Dividend.where(user_id: session[:user_id]).order(dividend_date: "ASC")
     end
+    
     @total_Valuation_pl = 0
   end
 

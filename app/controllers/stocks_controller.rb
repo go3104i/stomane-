@@ -7,11 +7,16 @@ class StocksController < ApplicationController
 
     #ユーザー情報読み込み
     @user = User.find_by(user_id: session[:user_id])
+    if @user == nil
+      @user = User.new
+    end
+
+    #ユーザーIDと一致する最初のレコードを抽出
     @stocks = Stock.find_by(user_id: session[:user_id])
+    #ユーザーIDと一致するレコードが１行でもある場合、ユーザーIDと一致する全レコードを抽出
     if @stocks != nil
       @stocks = Stock.where(user_id: session[:user_id]).order(start_date: "ASC")
     end
-
 
     #総合損益　初期化
     @total_Valuation_pl = 0
