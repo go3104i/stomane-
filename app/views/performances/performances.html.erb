@@ -42,37 +42,39 @@
       </thead>
       <!-- レコード表示 -->
       <tbody>
-        <!-- レコードを１つずつ出力 -->
-        <% @performances.each do |performance| %>
-        <%if performance.id == flash[:id] %>
-        <tr class = "tr_possession color-sign" data-href = "/performances/<%= performance.id %>/stock_operation">
-        <% else %>
-        <tr class = "tr_possession" data-href = "/performances/<%= performance.id %>/stock_operation">
-        <% end %>        
-          <td class = "td_possession s-code"><%= performance.stock_code %></td>
-          <td class = "td_possession s-name"><%= performance.stock_name %></td>
-          <td class = "td_possession t-type"><%= transaction_type_helper(performance.transaction_type) %></td>
-          <td class = "td_possession date"><%= performance.end_date.strftime("%y/%m/%d") %></td>
-          <td class = "td_possession o-quantity2 right"><%= performance.owned_quantity.to_s(:delimited) %>株</td>
-          <!-- 開始価格　少数の場合以外は整数型で出力 -->
-          <% s_price = seisho_helper(performance.start_price.round(2)) %>
-          <td class = "td_possession tanka2 right"><%= yen_helper s_price.to_s(:delimited) %></td>
-          <% c_price = seisho_helper(performance.end_price.round(2)) %>
-          <td class = "td_possession tanka2 right"><%= yen_helper c_price.to_s(:delimited) %></td>
-        
-          <!-- 評価損益率・評価損益額 色づけ判定有り-->
-          <% pl_ratio = performance.pl_ratio.round(2) %>
-          <% if pl_ratio > 0 %>
-            <td class = "td_possession pl-ratio2 color-purple right"><%= seisho_helper(pl_ratio) %>％</td>
-            <td class = "td_possession pl-amount2 color-purple right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
-          <% elsif pl_ratio < 0 %>
-            <td class = "td_possession pl-ratio2 color-green right"><%= seisho_helper(pl_ratio) %>%</td>
-            <td class = "td_possession pl-amount2 color-green right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
+        <% if @performances != nil %>
+          <!-- レコードを１つずつ出力 -->
+          <% @performances.each do |performance| %>
+          <%if performance.id == flash[:id] %>
+          <tr class = "tr_possession color-sign" data-href = "/performances/<%= performance.id %>/stock_operation">
           <% else %>
-            <td class = "td_possession pl-ratio2 right"><%= seisho_helper(pl_ratio) %>%</td>
-            <td class = "td_possession pl-amount2 right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
-          <% end %>
-        </tr>
+          <tr class = "tr_possession" data-href = "/performances/<%= performance.id %>/stock_operation">
+          <% end %>        
+            <td class = "td_possession s-code"><%= performance.stock_code %></td>
+            <td class = "td_possession s-name"><%= performance.stock_name %></td>
+            <td class = "td_possession t-type"><%= transaction_type_helper(performance.transaction_type) %></td>
+            <td class = "td_possession date"><%= performance.end_date.strftime("%y/%m/%d") %></td>
+            <td class = "td_possession o-quantity2 right"><%= performance.owned_quantity.to_s(:delimited) %>株</td>
+            <!-- 開始価格　少数の場合以外は整数型で出力 -->
+            <% s_price = seisho_helper(performance.start_price.round(2)) %>
+            <td class = "td_possession tanka2 right"><%= yen_helper s_price.to_s(:delimited) %></td>
+            <% c_price = seisho_helper(performance.end_price.round(2)) %>
+            <td class = "td_possession tanka2 right"><%= yen_helper c_price.to_s(:delimited) %></td>
+          
+            <!-- 評価損益率・評価損益額 色づけ判定有り-->
+            <% pl_ratio = performance.pl_ratio.round(2) %>
+            <% if pl_ratio > 0 %>
+              <td class = "td_possession pl-ratio2 color-purple right"><%= seisho_helper(pl_ratio) %>％</td>
+              <td class = "td_possession pl-amount2 color-purple right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
+            <% elsif pl_ratio < 0 %>
+              <td class = "td_possession pl-ratio2 color-green right"><%= seisho_helper(pl_ratio) %>%</td>
+              <td class = "td_possession pl-amount2 color-green right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
+            <% else %>
+              <td class = "td_possession pl-ratio2 right"><%= seisho_helper(pl_ratio) %>%</td>
+              <td class = "td_possession pl-amount2 right"><%= yen_helper performance.pl_amount.to_s(:delimited) %></td>
+            <% end %>
+          </tr>
+        <% end %>
       </tbody>
       <% end %>
     </table>
@@ -100,44 +102,46 @@
       </thead>
       <!-- レコード表示 -->
       <tbody>
-        <!-- レコードを１つずつ出力 -->
-        <% @dividends.each do |dividend| %>
-        <%if dividend.id == flash[:dividend_id] %>
-        <tr class = "tr_possession color-sign" data-href = "performances/<%= dividend.id %>/dividend_operation">
-        <% else %>
-        <tr class = "tr_possession" data-href = "performances/<%= dividend.id %>/dividend_operation">
-        <% end %> 
-          <td class = "td_possession s-code"><%= dividend.stock_code %></td>
-          <td class = "td_possession s-name2"><%= dividend.stock_name %></td>
-          <td class = "td_possession d-type"><%= dividend_type_helper(dividend.dividend_type) %></td>
-          <td class = "td_possession season"><%= season_helper(dividend.season) %></td>
-          <td class = "td_possession date"><%= dividend.dividend_date.strftime("%y/%m/%d") %></td>
-          
-          <!-- 対象株数　ブランクの場合は（ー）を表示 -->
-          <% if dividend.dividend_quantity.blank?%>
-            <td class = "td_possession o-quantity right">-</td>
+        <% if @dividends != nil %>
+          <!-- レコードを１つずつ出力 -->
+          <% @dividends.each do |dividend| %>
+          <%if dividend.id == flash[:dividend_id] %>
+          <tr class = "tr_possession color-sign" data-href = "performances/<%= dividend.id %>/dividend_operation">
           <% else %>
-            <td class = "td_possession o-quantity right"><%= dividend.dividend_quantity.to_s(:delimited) %>株</td>
-          <% end %>
+          <tr class = "tr_possession" data-href = "performances/<%= dividend.id %>/dividend_operation">
+          <% end %> 
+            <td class = "td_possession s-code"><%= dividend.stock_code %></td>
+            <td class = "td_possession s-name2"><%= dividend.stock_name %></td>
+            <td class = "td_possession d-type"><%= dividend_type_helper(dividend.dividend_type) %></td>
+            <td class = "td_possession season"><%= season_helper(dividend.season) %></td>
+            <td class = "td_possession date"><%= dividend.dividend_date.strftime("%y/%m/%d") %></td>
+            
+            <!-- 対象株数　ブランクの場合は（ー）を表示 -->
+            <% if dividend.dividend_quantity.blank?%>
+              <td class = "td_possession o-quantity right">-</td>
+            <% else %>
+              <td class = "td_possession o-quantity right"><%= dividend.dividend_quantity.to_s(:delimited) %>株</td>
+            <% end %>
 
-          <!-- 開始価格　ブランクの場合は（ー）を表示 -->
-          <% if dividend.dividend_price.blank? %>
-            <td class = "td_possession d-tanka right">-</td>
-          <% else %>
-            <!-- 開始価格　少数の場合以外は整数型で出力 -->
-            <% d_price = seisho_helper(dividend.dividend_price.round(2)) %>
-            <td class = "td_possession d-tanka right"><%= yen_helper d_price.to_s(:delimited) %></td>
-          <% end %>
-        
-          <!-- 評価損益率・評価損益額 色づけ判定有り-->
-          <% if dividend.dividend_amount > 0 %>
-            <td class = "td_possession d-amount color-purple right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
-          <% elsif dividend.dividend_amount < 0 %>
-            <td class = "td_possession d-amount color-green right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
-          <% else %>
-            <td class = "td_possession d-amount right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
-          <% end %>
-        </tr>
+            <!-- 開始価格　ブランクの場合は（ー）を表示 -->
+            <% if dividend.dividend_price.blank? %>
+              <td class = "td_possession d-tanka right">-</td>
+            <% else %>
+              <!-- 開始価格　少数の場合以外は整数型で出力 -->
+              <% d_price = seisho_helper(dividend.dividend_price.round(2)) %>
+              <td class = "td_possession d-tanka right"><%= yen_helper d_price.to_s(:delimited) %></td>
+            <% end %>
+          
+            <!-- 評価損益率・評価損益額 色づけ判定有り-->
+            <% if dividend.dividend_amount > 0 %>
+              <td class = "td_possession d-amount color-purple right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
+            <% elsif dividend.dividend_amount < 0 %>
+              <td class = "td_possession d-amount color-green right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
+            <% else %>
+              <td class = "td_possession d-amount right"><%= yen_helper dividend.dividend_amount.to_s(:delimited) %></td>
+            <% end %>
+          </tr>
+        <% end %>  
       </tbody>
       <% end %>
     </table>
