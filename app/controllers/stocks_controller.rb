@@ -3,12 +3,16 @@ class StocksController < ApplicationController
   #トップ画面------------------------------------------------------------------------------------------
   def possession
     #仮のユーザーIDを付与　ユーザーID機能実装後に削除
-    session[:user_id] = "2"
+    session[:user_id] = "3"
 
     #ユーザー情報読み込み
     @user = User.find_by(user_id: session[:user_id])
-    @stocks = Stock.where(user_id: session[:user_id]).order(start_date: "ASC")
-    
+    @stocks = Stock.find_by(user_id: session[:user_id])
+    if @stocks != nil
+      @stocks = Stock.where(user_id: session[:user_id]).order(start_date: "ASC")
+    end
+
+
     #総合損益　初期化
     @total_Valuation_pl = 0
   end

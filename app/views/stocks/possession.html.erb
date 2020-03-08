@@ -41,51 +41,53 @@
       </thead>
       <!-- レコード表示 -->
       <tbody>
-        <!-- レコードを１つずつ出力 -->
-        <% @stocks.each do |stock| %>
-        <!-- 新規レコードに色付け -->
-        <%if stock.id == flash[:id] %>
-        <tr class = "tr_possession color-sign" data-href = "stocks/<%= stock.id %>/operation">
-        <% else %>
-        <tr class = "tr_possession" data-href = "stocks/<%= stock.id %>/operation">
-        <% end %>
-          <td class = "td_possession s-code"><%= stock.stock_code %></td>
-          <td class = "td_possession s-name"><%= stock.stock_name %></td>
-          <td class = "td_possession t-type"><%= transaction_type_helper(stock.transaction_type) %></td>
-          <td class = "td_possession date"><%= stock.start_date.strftime("%y/%m/%d") %></td>
-          <td class = "td_possession o-quantity right"><%= stock.owned_quantity.to_s(:delimited) %>株</td>
-          <!-- 開始価格　少数の場合以外は整数型で出力 -->
-          <% s_price = seisho_helper(stock.start_price.round(2)) %>
-          <td class = "td_possession s-tanka right"><%= yen_helper s_price.to_s(:delimited) %></td>
-          <% c_price = seisho_helper(stock.closing_price) %>
-          <td class = "td_possession c-price right"><%= yen_helper c_price.to_s(:delimited) %></td>
-
-          <!-- 買い売り判定　損益率＆損益額計算 -->
-          <!-- 買いの場合 -->
-          <% if stock.transaction_type != "03"%>
-            <% pl_ratio = (stock.closing_price / stock.start_price - 1) * 100 %>
-            <% pl_amount = ((stock.closing_price - stock.start_price) * stock.owned_quantity).to_i %>
-            <% @total_Valuation_pl += pl_amount %>
-          <!-- 売りの場合 -->  
-          <% elsif stock.transaction_type == "03"%>
-            <% pl_ratio = (1 - stock.closing_price / stock.start_price) * 100 %>
-            <% pl_amount = ((stock.start_price - stock.closing_price) * stock.owned_quantity).to_i %>
-            <% @total_Valuation_pl += pl_amount %>
-          <% end %>
-        
-          <!-- 評価損益率・評価損益額 色づけ判定有り-->
-          <% pl_ratio = pl_ratio.round(2) %>
-          <% if pl_ratio > 0 %>
-            <td class = "td_possession pl-ratio color-purple right"><%= seisho_helper(pl_ratio) %>％</td>
-            <td class = "td_possession pl-amount color-purple right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
-          <% elsif pl_ratio < 0 %>
-            <td class = "td_possession pl-ratio color-green right"><%= seisho_helper(pl_ratio) %>%</td>
-            <td class = "td_possession pl-amount color-green right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+        <% if @stocks != nil %>
+          <!-- レコードを１つずつ出力 -->
+          <% @stocks.each do |stock| %>
+          <!-- 新規レコードに色付け -->
+          <%if stock.id == flash[:id] %>
+          <tr class = "tr_possession color-sign" data-href = "stocks/<%= stock.id %>/operation">
           <% else %>
-            <td class = "td_possession pl-ratio right"><%= seisho_helper(pl_ratio) %>%</td>
-            <td class = "td_possession pl-amount right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+          <tr class = "tr_possession" data-href = "stocks/<%= stock.id %>/operation">
           <% end %>
-        </tr>
+            <td class = "td_possession s-code"><%= stock.stock_code %></td>
+            <td class = "td_possession s-name"><%= stock.stock_name %></td>
+            <td class = "td_possession t-type"><%= transaction_type_helper(stock.transaction_type) %></td>
+            <td class = "td_possession date"><%= stock.start_date.strftime("%y/%m/%d") %></td>
+            <td class = "td_possession o-quantity right"><%= stock.owned_quantity.to_s(:delimited) %>株</td>
+            <!-- 開始価格　少数の場合以外は整数型で出力 -->
+            <% s_price = seisho_helper(stock.start_price.round(2)) %>
+            <td class = "td_possession s-tanka right"><%= yen_helper s_price.to_s(:delimited) %></td>
+            <% c_price = seisho_helper(stock.closing_price) %>
+            <td class = "td_possession c-price right"><%= yen_helper c_price.to_s(:delimited) %></td>
+
+            <!-- 買い売り判定　損益率＆損益額計算 -->
+            <!-- 買いの場合 -->
+            <% if stock.transaction_type != "03"%>
+              <% pl_ratio = (stock.closing_price / stock.start_price - 1) * 100 %>
+              <% pl_amount = ((stock.closing_price - stock.start_price) * stock.owned_quantity).to_i %>
+              <% @total_Valuation_pl += pl_amount %>
+            <!-- 売りの場合 -->  
+            <% elsif stock.transaction_type == "03"%>
+              <% pl_ratio = (1 - stock.closing_price / stock.start_price) * 100 %>
+              <% pl_amount = ((stock.start_price - stock.closing_price) * stock.owned_quantity).to_i %>
+              <% @total_Valuation_pl += pl_amount %>
+            <% end %>
+          
+            <!-- 評価損益率・評価損益額 色づけ判定有り-->
+            <% pl_ratio = pl_ratio.round(2) %>
+            <% if pl_ratio > 0 %>
+              <td class = "td_possession pl-ratio color-purple right"><%= seisho_helper(pl_ratio) %>％</td>
+              <td class = "td_possession pl-amount color-purple right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+            <% elsif pl_ratio < 0 %>
+              <td class = "td_possession pl-ratio color-green right"><%= seisho_helper(pl_ratio) %>%</td>
+              <td class = "td_possession pl-amount color-green right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+            <% else %>
+              <td class = "td_possession pl-ratio right"><%= seisho_helper(pl_ratio) %>%</td>
+              <td class = "td_possession pl-amount right"><%= yen_helper pl_amount.to_s(:delimited) %></td>
+            <% end %>
+          </tr>
+        <% end %>  
       </tbody>
       <% end %>
     </table>
@@ -111,38 +113,40 @@
       <tbody>
         <tr class = "tr_possession2">
           <!-- 評価損益合計 色づけ判定有り-->
-          <% if @total_Valuation_pl > 0 %>
-            <td class = "td_possession2 color-purple"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
-          <% elsif @total_Valuation_pl < 0 %>
-            <td class = "td_possession2 color-green"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
-          <% else %>
-            <td class = "td_possession2"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
-          <% end %>
-          <!-- 実現譲渡損益合計 色づけ判定有り-->
-          <% if @user.stock_pl_amount > 0 %>
-            <td class = "td_possession2 color-purple"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
-          <% elsif @user.stock_pl_amount < 0 %>
-            <td class = "td_possession2 right color-green"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
-          <% else %>
-            <td class = "td_possession2"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
-          <% end %>
-          <!-- 実現配当損益合計 色づけ判定有り-->
-          <% if @user.dividend_pl_amount > 0 %>
-            <td class = "td_possession2 color-purple"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
-          <% elsif @user.dividend_pl_amount < 0 %>
-            <td class = "td_possession2 color-green"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
-          <% else %>
-            <td class = "td_possession2"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
-          <% end %>
-          <!-- 総合損益 色づけ判定有り-->
-          <% @total_pl = @total_Valuation_pl + @user.stock_pl_amount + @user.dividend_pl_amount%>
-          <% if @total_pl > 0 %>
-            <td class = "td_possession2 color-purple"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
-          <% elsif @total_pl < 0 %>
-            <td class = "td_possession2 color-green"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
-          <% else %>
-            <td class = "td_possession2"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
-          <% end %>
+          <% if @user != nil %>
+            <% if @total_Valuation_pl > 0 %>
+              <td class = "td_possession2 color-purple"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
+            <% elsif @total_Valuation_pl < 0 %>
+              <td class = "td_possession2 color-green"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
+            <% else %>
+              <td class = "td_possession2"><%= yen_helper(@total_Valuation_pl.to_s(:delimited)) %></td>
+            <% end %>
+            <!-- 実現譲渡損益合計 色づけ判定有り-->
+            <% if @user.stock_pl_amount > 0 %>
+              <td class = "td_possession2 color-purple"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
+            <% elsif @user.stock_pl_amount < 0 %>
+              <td class = "td_possession2 right color-green"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
+            <% else %>
+              <td class = "td_possession2"><%= yen_helper(@user.stock_pl_amount.to_s(:delimited)) %></td>
+            <% end %>
+            <!-- 実現配当損益合計 色づけ判定有り-->
+            <% if @user.dividend_pl_amount > 0 %>
+              <td class = "td_possession2 color-purple"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
+            <% elsif @user.dividend_pl_amount < 0 %>
+              <td class = "td_possession2 color-green"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
+            <% else %>
+              <td class = "td_possession2"><%= yen_helper(@user.dividend_pl_amount.to_s(:delimited)) %></td>
+            <% end %>
+            <!-- 総合損益 色づけ判定有り-->
+            <% @total_pl = @total_Valuation_pl + @user.stock_pl_amount + @user.dividend_pl_amount%>
+            <% if @total_pl > 0 %>
+              <td class = "td_possession2 color-purple"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
+            <% elsif @total_pl < 0 %>
+              <td class = "td_possession2 color-green"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
+            <% else %>
+              <td class = "td_possession2"><%= yen_helper(@total_pl.to_s(:delimited)) %></td>
+            <% end %>
+          <% end %> 
         </tr>
       </tbody>
     </table>
