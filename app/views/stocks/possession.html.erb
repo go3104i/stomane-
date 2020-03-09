@@ -16,7 +16,14 @@
         <%= flash[:liquidation] %>
       </div>
     <% end %>
-    
+
+    <!-- エラーメッセージ出力-->
+    <div class = "form-error-wrapper">
+      <% @user.errors.full_messages.each do |message| %>
+        <div class="form-error"><%= message %></div>
+      <% end %>
+    </div>
+
     <!-- 保有銘柄 ------------------------------------------------------------------------------------------------------->
     <!-- 保有銘柄タイトル -->
     <div class = "hoyu">

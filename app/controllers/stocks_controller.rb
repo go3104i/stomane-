@@ -8,7 +8,8 @@ class StocksController < ApplicationController
     #ユーザー情報読み込み
     @user = User.find_by(user_id: session[:user_id])
     if @user == nil
-      @user = User.new
+      @user = User.new(user_id: session[:user_id])
+      @user.save
     end
 
     #ユーザーIDと一致する最初のレコードを抽出
